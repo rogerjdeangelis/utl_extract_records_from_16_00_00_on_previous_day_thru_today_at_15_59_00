@@ -1,5 +1,17 @@
 Extract records from 16:00:00 the previous day thru today at 15:59:00
 
+Recent optimal solution by
+Keintz, Mark" <mkeintz@WHARTON.UPENN.EDU>
+
+%let upper_limit=%sysfunc(dhms(%sysfunc(today()),15,59,59));
+%let lower_limit=%sysevalf(&upper_limit+1-24*60*60);
+data want(keep=dteTym) ;
+  set have;
+  where dtetym>=&lower_limit;
+  output;
+  if dtetym>&upper_limit then stop;
+run;
+
 SAS Forum
 https://communities.sas.com/t5/SAS-Programming/Datetime-function/m-p/528390
 
